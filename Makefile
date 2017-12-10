@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=--std=c++11 -Wall -pedantic
-OBJ=card cardtest test_card deck decktest test_deck hand handtest test_hand driver poker
+OBJ=card cardtest test_card deck decktest test_deck hand handtest test_hand driver montecarlo poker
 
 poker: driver deck card hand montecarlo
 	$(CC) $(CFLAGS) driver deck card hand montecarlo -o poker
