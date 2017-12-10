@@ -119,6 +119,7 @@ int Hand::getThreeOfAKind(void)const{
   }
   return 0;
 }
+
 bool Hand::hasFourOfAKind()const{
 for(size_t i = 0; i < HAND - 3; ++i){
     if(this->hand[i].get_face() == this->hand[i + 1].get_face()){
