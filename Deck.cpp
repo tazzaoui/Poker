@@ -13,8 +13,12 @@ Deck::Deck(){
     this->cards.push_back(Card(i));
 }
 
+Deck::Deck(const Deck&d){
+  this->current_card = d.current_card;
+  this->cards = d.cards;
+}
+
 void Deck::shuffle(){
-  srand(time(0));
   for(int i = 0; i < 52; ++i){
     size_t index = i + (rand() % (52 - i));
     Card temp = this->cards[i];
@@ -36,12 +40,21 @@ bool Deck::more_cards(void) const{
   return this->current_card < 52;
 }
 
+const vector<Card>& Deck::get_cards()const{
+  return this->cards;
+}
+
 ostream& operator<<(ostream& os, const Deck& d){
   for(size_t i = 0; i < d.cards.size(); ++i)
     os << d.cards.at(i).get_card() << " " << d.cards.at(i) << endl;
   return os;
 }
 
-const vector<Card>& Deck::get_cards()const{
-  return this->cards;
+Deck& Deck::operator=(const Deck& d){
+  if(this != &d){
+    this->current_card = d.current_card;
+    this->cards = d.cards;
+  }
+  return *this;
 }
+
