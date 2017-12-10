@@ -2,8 +2,8 @@ CC=g++
 CFLAGS=--std=c++11 -Wall -pedantic
 OBJ=card cardtest test_card deck decktest test_deck hand handtest test_hand driver poker
 
-poker: driver deck card hand
-	$(CC) $(CFLAGS) driver deck card hand -o poker
+poker: driver deck card hand montecarlo
+	$(CC) $(CFLAGS) driver deck card hand montecarlo -o poker
 
 test_card: card cardtest
 	$(CC) $CFLAGS card cardtest -o test_card
@@ -31,6 +31,9 @@ deck: Deck.cpp Deck.hpp
 
 hand: Hand.cpp Hand.hpp
 	$(CC) $(CFLAGS) -c Hand.cpp -o hand
+
+montecarlo: MonteCarlo.cpp MonteCarlo.hpp
+	$(CC) $(CFLAGS) -c MonteCarlo.cpp -o montecarlo
 
 driver: Poker.cpp
 	$(CC) $(CFLAGS) -c Poker.cpp -o driver
