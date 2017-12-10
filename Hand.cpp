@@ -12,7 +12,7 @@ void Hand::sortByFace(){
 	 return a.get_face() > b.get_face();});
 }
 
-void Hand::Replace(Card& new_card, Card& old_card){
+void Hand::replace(Card& new_card, Card& old_card){
   for(size_t i = 0; i < HAND; ++i)
     if(this->hand[i] == old_card){
       this->hand[i] = new_card;
@@ -31,6 +31,17 @@ Hand::Hand(Card* cards){
 Hand::Hand(Card& a, Card& b, Card& c, Card& d){
   this->hand = {a,b,c,d};
   this->sortByFace();
+}
+
+bool Hand::contains(const Card& c){
+  for(size_t i = 0; i < HAND; ++i)
+    if(this->hand[i] == c)
+      return true;
+  return false;
+}
+
+vector<Card> Hand::get_hand(void)const{
+  return this->hand;
 }
 
 /*
@@ -58,6 +69,7 @@ int Hand::getFirstPair()const{
       return this->hand[i].get_face();
   return false;
 }
+
 bool Hand::hasTwoPairs()const{
   bool found = false;
   for(size_t i = 0; i < HAND - 1; ++i){
@@ -128,6 +140,7 @@ int Hand::getFourOfAKind()const{
   }
   return 0;
 }
+
 bool Hand::hasFlush()const{
   for(size_t i = HAND-1; i > 0; --i){
   if(this->hand[i].get_suit() != this->hand[i - 1].get_suit())

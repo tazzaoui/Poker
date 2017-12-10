@@ -17,7 +17,9 @@ private:
 public:
   Hand(Card*);
   Hand(Card&, Card&, Card&, Card&);
-  void Replace(Card& new_card, Card& old_card);
+  void replace(Card& new_card, Card& old_card);
+  vector<Card> get_hand(void)const;
+  bool contains(const Card&);
   int type(void)const;
   int value(void)const;
   bool hasPair(void)const;
@@ -36,12 +38,5 @@ public:
   bool operator<(const Hand&);
   bool operator>(const Hand&);
 };
-
-
-
-
-
-
-
 
 #endif
