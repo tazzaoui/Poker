@@ -2,13 +2,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <string>
 #include "Deck.hpp"
 #include "Card.hpp"
 #include "Hand.hpp"
 #include "MonteCarlo.hpp"
-#include <string>
+
 
 using namespace std;
+
+int verbose = 0;
+int numRuns = 1000;
 
 int main(int argc, char* argv[]){
   printf(R"EOF(
@@ -22,15 +26,25 @@ int main(int argc, char* argv[]){
                        |____V||  .  |
                               |____V|)EOF");
 
+  cout << endl << endl;
   
-  /*
-    Set Verbosity
-     0 = No debug info (default)
-     1 = Show only results of Monte Carlo Simulation
-     2 = Maximum verbosity (INCLUDING THE DEALER'S HAND)
-  */
+  vector<string> cmdArgs = vector<string>(argv, argv + argc);
 
-  const int verbose = (argc > 1 ? atoi(argv[1]) : 0);
+  for(size_t i = 0; i < cmdArgs.size(); ++i){
+    if(cmdArgs[i] == "-h" || cmdArgs[i] == "--help"){
+      cout << "Usage: poker [-h] [-v VERBOSITY] [-n NUMRUNS]" << endl;
+      cout << "-h, --help:     show this help message and exit." << endl;
+      cout << "-v, --verbose:  set verbosity. Default = 0." 
+	   << "(0 = output essentials only, 1 = output Monte Carlo stats, "
+	   << "2 = Maximum verbosity)" << endl;
+      cout << "-n, --numruns:  Number of simulations per card configuration. Default = 1000" << endl;
+      exit(0);
+    }if(cmdArgs[i] == "-v"|| cmdArgs[i] == "--verbose"){
+      if(i + 1 < cmdArgs.size()) verbose = atoi(cmdArgs[i + 1].c_str());
+    }if(cmdArgs[i] == "-n" || cmdArgs[i] == "--numruns"){
+      if(i + 1 < cmdArgs.size()) numRuns= atoi(cmdArgs[i + 1].c_str());
+    }
+  }
   
   Deck d;
   d.shuffle();
@@ -109,7 +123,7 @@ int main(int argc, char* argv[]){
     and act according to the one that yeilded 
     the largest probability of success
   */
-  MonteCarlo mc(d, h1, 10000);
+  MonteCarlo mc(d, h1, numRuns);
   mc.simulate(verbose);
   const int* optimalConfiguation = mc.getOptimalConfiguration();
   for(size_t i = 0; i < 5; ++i){
@@ -119,7 +133,7 @@ int main(int argc, char* argv[]){
    }
   }
   if(verbose == 2)
-    cout << endl << "Dealer's new hand: " << h1 << endl;
+    cout << endl << "Dealer's new hand: " << endl << h1 << endl;
   
   cout << (h1 > h2 ? "The Dealer's" : "Your") << " hand is better!" << endl;
   
