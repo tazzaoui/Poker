@@ -2,7 +2,23 @@
 Using Monte Carlo methods to approximate the likelihood of success
 
 # 5 Card Draw
+```
+          _____
+         |A .  | _____
+         | /.\ ||A ^  | _____
+         |(_._)|| / \ ||A _  | _____
+         |  |  || \ / || ( ) ||A_ _ |
+         |____V||  .  ||(_'_)||( v )|
+                |____V||  |  || \ / |
+                       |____V||  .  |
+                              |____V|
 
+Usage: poker [-h] [-v VERBOSITY] [-n NUMRUNS]
+-h, --help: show this help message and exit.
+-v, --verbose: set verbosity. Default = 0.
+               (0 = output essentials only, 1 = output Monte Carlo stats, 2 = Maximum verbosity)
+-n, --numruns: Number of simulations per card configuration. Default = 1000
+```
 ## How it works
 
 ### Card Representation:
